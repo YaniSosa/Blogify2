@@ -1,0 +1,39 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+
+<h1 align="center">Posts</h1>
+<div id="posts">
+    {% for post in posts %} 
+       <div class="card border-dark">
+            <!--Card for Username-->
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+                {% if user.id == post.author %}  <!--only the logged in user who created the post can delete -->
+                <div class="btn-group">
+                    <!--Dropdown Toggle for Delete Function-->
+                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                    </button>    
+                    <ul class="dropdown-menu">
+                        <li><a href="/delete-post/{{post.id}}" class="dropdown-item">Delete</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            <!--Card for Inputted Posts-->
+            <div class="card-body">
+                <div class="card-text">{{post.text}}</div>
+            </div>
+            <!--Card for Date Posted-->
+            <div class="card-footer text-muted">{{post.date_created}}</div>
+       </div>
+    <br />
+    {% endfor %} <!--end of loop-->
+
+    <!--Create Post Button-->
+    <div align="center">
+        <a href="/create-post">
+            <button type="button" class="btn btn-primary btn-lg">Create a Post</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}
